@@ -35,7 +35,6 @@ main() {
     });
 
     test('AppError', () {
-      //TODO: 1- Explain Error of LoadMovies
       when(serviceMock.loadMovies()).thenThrow(Error);
 
       final expectedResponse = [
@@ -45,14 +44,10 @@ main() {
       ];
 
       appBloc.add(FetchEvent());
-      
-      // TODO: 2- Fetch and emit in Order
-      /*
-      emitsInOrder(expectedResponse)
-      */
+
       expectLater(
         appBloc,
-        [],
+        emitsInOrder(expectedResponse),
       );
     });
 
