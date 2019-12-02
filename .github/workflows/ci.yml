@@ -1,0 +1,40 @@
+name: Flutter Movie CI On push
+
+# Trigger on push
+on: push
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+
+    - name: Get packages
+      run: flutter pub get
+
+    - name: Test
+      run: flutter test --coverage
+
+    - name: Build - APK
+      run: flutter build apk
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: apk
+        path: build/app/outputs/apk/release/app-release.apk
+
+    - name: Collect the code coverage
+      uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}} #required
+        file: ./coverage/lcov.info
