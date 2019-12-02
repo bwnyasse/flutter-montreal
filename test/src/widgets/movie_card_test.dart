@@ -21,7 +21,6 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: MovieCard(
-              //TODO 1- Provide a key to identify your widget
               key: Key("${movie.id}"),
               data: movie,
             ),
@@ -29,8 +28,6 @@ void main() {
         ),
       );
 
-
-      // TODO 2- Use Finder API , check every content you want
       final movieFinder = find.byType(MovieCard);
       expect(movieFinder, findsOneWidget);
 
